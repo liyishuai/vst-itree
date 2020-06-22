@@ -48,3 +48,30 @@ Definition execute {E T} (m : itree E T) : IO T :=
 
 Definition ITREE {E F T} (t : itree (E +' F) T) :=
   EX t' : itree (E +' F) T, !! vis_trace_incl t t' && has_ext t'.
+
+(** Compiling [ITREE] after [execute] fails with:
+
+Error:
+In environment
+E : Type -> Type
+F : Type -> Type
+T : Type
+t : itree (E +' F) T
+t' : itree (E +' F) T
+The term "t'" has type "itree (E +' F) T" while it is expected to have type "?Z"
+(unable to find a well-typed instantiation for "?Z": cannot ensure that
+"Type@{max(Set,ITree.Core.ITreeDefinition.2,ITree.Core.ITreeDefinition.3,itreeF.u1+1)}" is a subtype of
+"Type@{has_ext.u0}").
+ *)
+
+(** Compiling [execute] after [ITREE] fails with:
+
+Error:
+Unable to satisfy the following constraints:
+In environment:
+E : Type -> Type
+T : Type
+m : itree E T
+
+?FM : "Functor.Functor (fun x : Type => IO x)"
+ *)
